@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户页面</title>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+<div id="hello-vue" class="demo">
+  {{ message }}
+</div>
+
+<div id = "app">
+  <div v-for="user in info">
+    {{ user.name }}
+  </div>
+</div>
+<script>
+// const HelloVueApp = {
+//   data() {
+//     return {
+//       message: '嗨 Vue!!'
+//     }
+//   }
+// }
+
+// Vue.createApp(HelloVueApp).mount('#hello-vue')
+
+new Vue({
+  el: "#hello-vue",
+  data:{
+    message: '嗨 Vue!!'
+  }
+})
+
+new Vue({
+  el: '#app',
+  data:{
+    info:null
+  },
+  mounted(){
+    axios
+      .get('http://localhost:8080/getUserList')
+      .then(response => (this.info = response.data))
+      .catch(function(error){
+        console.log(error);
+      });
+  }
+})
+</script>
+</body>
+</html>
